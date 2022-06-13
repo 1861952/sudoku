@@ -88,11 +88,11 @@ const solve = () => {
 
     const options = {
       method: 'POST',
-      url: 'https://sudoku-solver9.p.rapidapi.com/',
+      url: 'https://sudoku-solver-redo.p.rapidapi.com/',
       headers: {
         'content-type': 'application/json',
         // 'X-RapidAPI-Host': 'solve-sudoku.p.rapidapi.com',
-        'X-RapidAPI-Host': 'sudoku-solver9.p.rapidapi.com',
+        'X-RapidAPI-Host': 'sudoku-solver-redo.p.rapidapi.com',
         'X-RapidAPI-Key': 'aeec4369c2mshc3929494c12007ap195358jsn8e3d19d44e53'
       },
         data: {
@@ -110,12 +110,16 @@ const solve = () => {
         // } else {
         //     populateValues(response.data.data.canBeSolved, response.data.data.message, response.data.data.solution)
         // }
-        console.log(response.data);
-        console.log(response.data.canBeSolved)
-        if(!response.data.canBeSolved) {
+        console.log('response', response)
+        console.log(response.data.data);
+        console.log(response.data.data.canBeSolved)
+
+        const data = response.data.data
+
+        if(!data.canBeSolved) {
             solutionDisplay.innerHTML = 'This is not solvable'
         } else {
-            populateValues(response.data.canBeSolved, response.data.message, response.data.solution)
+            populateValues(data.canBeSolved, data.message, data.solution)
         }
         solveButton.disabled = true
         solveButton.style.display = "none"
