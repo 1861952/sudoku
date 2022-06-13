@@ -1,3 +1,67 @@
+// const puzzleBoard = document.querySelector('#puzzle')
+// const solveButton = doucment.querySelector('#solve-button')
+// // const solutionDisplay = document.querySelector('#solution')
+// const squares = 81
+// const submission = []
+
+// for (let i = 0; i < squares; i++) {
+//     const inputElement = document.createElement('input')
+//     inputElement.setAttribute('type', 'number')
+//     inputElement.setAttribute('min', 1)
+//     inputElement.setAttribute('max', 9)
+//     puzzleBoard.appendChild(inputElement)
+
+// }
+
+// const joinValues = () => {
+//     const inputs = document.querySelectorAll('input')
+//     inputs.forEach(input => {
+//         if (input.value) {
+//             submission.push(input.value)
+//         } else {
+//             submission.push('.')
+//         }
+//     })
+//     console.log(submission)
+// }
+
+// const populateValues = (isSolvable, solution) => {
+//     const inputs = document.querySelectorAll('input')
+//     if (isSolvable && solution) {
+//         inputs.forEach((input, i) => {
+//             input.value = solution[i]
+//         })
+//     }
+// }
+
+// const solve = () => {
+//     joinValues()
+//     const axios = require("axios");
+
+// const options = {
+//   method: 'POST',
+//   url: 'https://sudoku-solver-redo.p.rapidapi.com/',
+//   headers: {
+//     'content-type': 'application/json',
+//     'X-RapidAPI-Key': '622fda2584msh989e26adad5c452p10da84jsn321a3478029a',
+//     'X-RapidAPI-Host': 'sudoku-solver-redo.p.rapidapi.com'
+//   },
+//   data: {data: data}
+// };
+
+// axios.request(options).then(function (response) {
+// 	console.log(response.data);
+//     populateValues(response.data.canBeSolved, response.data.solution)
+// }).catch(function (error) {
+// 	console.error(error);
+// });
+    
+// }
+
+// solveButton.addEventListener('click', solve)
+
+
+
 const puzzleBoard = document.querySelector('#puzzle')
 const solveButton = document.querySelector('#solve-button')
 const resetButton = document.querySelector('#reset-button')
@@ -84,47 +148,21 @@ const solve_local = () => {
 const solve = () => {
     joinValues()
     const data = submission.join('')
-    console.log(data)
+    console.log('data',data)
 
-    const options = {
-      method: 'POST',
-      url: 'https://sudoku-solver9.p.rapidapi.com/',
-      headers: {
-        'content-type': 'application/json',
-        // 'X-RapidAPI-Host': 'solve-sudoku.p.rapidapi.com',
-        'X-RapidAPI-Host': 'sudoku-solver9.p.rapidapi.com',
-        'X-RapidAPI-Key': process.env.RAPID_API_KEY
-      },
-        data: {
-            "data":data
+    fetch('http://localhost:8000/solve', {
+        method: 'POST',
+        header: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         }
-        ,
-    //   data: '{"puzzle":"2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3"}'
-    };
-   
-    axios.request(options).then(function (response) {
-        // console.log(response.data);
-        // console.log(response.data.data.canBeSolved)
-        // if(!response.data.data.canBeSolved) {
-        //     solutionDisplay.innerHTML = 'This is not solvable'
-        // } else {
-        //     populateValues(response.data.data.canBeSolved, response.data.data.message, response.data.data.solution)
-        // }
-        console.log(response.data);
-        console.log(response.data.canBeSolved)
-        if(!response.data.canBeSolved) {
-            solutionDisplay.innerHTML = 'This is not solvable'
-        } else {
-            populateValues(response.data.canBeSolved, response.data.message, response.data.solution)
-        }
-        solveButton.disabled = true
-        solveButton.style.display = "none"
-        resetButton.style.display = "block"
-    }).catch(function (error) {
-        console.error(error);
-    });
+    }) .then(response => response.json())
+       .then(data => console.log)
+       .catch((error) => {
+           console.error('Error:', error)
+       })
+
 }
-
 
 
 solveButton.addEventListener('click', solve)
