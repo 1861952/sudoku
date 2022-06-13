@@ -93,7 +93,7 @@ const solve = () => {
         'content-type': 'application/json',
         // 'X-RapidAPI-Host': 'solve-sudoku.p.rapidapi.com',
         'X-RapidAPI-Host': 'sudoku-solver9.p.rapidapi.com',
-        'X-RapidAPI-Key': process.env.RAPID_API_KEY
+        'X-RapidAPI-Key': 'aeec4369c2mshc3929494c12007ap195358jsn8e3d19d44e53'
       },
         data: {
             "data":data
